@@ -17,6 +17,9 @@
 void func(int connfd) 
 { 
     char buff[MAX]; 
+    char bufflast[MAX];
+    char buffexit[10];
+
     int n; 
     int fp; // File pointer for writing
 
@@ -26,23 +29,40 @@ void func(int connfd)
         perror("open");
         exit(EXIT_FAILURE);
     }
-
     // infinite loop for chat 
     for (;;) { 
         bzero(buff, MAX); 
+        bzero(bufflast, MAX); 
+        bzero(buffexit, 10); 
 
         // read the message from client and copy it in buffer 
         read(connfd, buff, sizeof(buff)); 
+        strcpy(bufflast, "info");
+        strcpy(buffexit, "exit");
+
+        int s = strncmp(buff, bufflast, 6);
+
+        printf("%d", s);
+        if (s == 0){
+            printf("loggggg\n");
+
+        }
+
+        /*s = strncmp(buff, buffexit, 4);
+
+        //printf("%d", s);
+        if (s == 0){
+            printf("exittttttt\n");
+
+        }*/
         
         // Write received message to file
-  
        ssize_t w = write(fp, buff, strlen(buff));
         if (w < 0){
                     printf("Error writing to file!\n");
 
         }
     
-
         // print buffer which contains the client contents 
         printf("From client: %s\t To client : ", buff); 
         bzero(buff, MAX); 

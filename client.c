@@ -21,10 +21,7 @@ void func(int sockfd)
         while ((buff[n++] = getchar()) != '\n')
             ;
         write(sockfd, buff, sizeof(buff));
-        if (strcmp(buff, "3030") == 0)
-        {
-            printf("you want last mes?\n");
-        }
+
 
         bzero(buff, sizeof(buff));
         read(sockfd, buff, sizeof(buff));
